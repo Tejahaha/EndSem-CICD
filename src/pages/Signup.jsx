@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
+import { signup } from "../services/mockAuth";
 
 export default function Signup() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -10,11 +10,11 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8081/auth/signup", form);
-      alert(res.data);
+      const message = await signup(form);
+      alert(message);
       navigate("/");
     } catch (err) {
-      alert("Registration failed — username or email already exists.");
+      alert(err.message || "Registration failed  username or email already exists.");
     }
   };
 
